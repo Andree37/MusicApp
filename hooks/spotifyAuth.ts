@@ -1,4 +1,4 @@
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import {makeRedirectUri, useAuthRequest} from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 
 // Ensure that you initialize the WebBrowser:
@@ -11,8 +11,6 @@ const discovery = {
 
 export default function useSpotifyAuth() {
     const redirectUri = makeRedirectUri();
-    console.log('redirectUri', redirectUri);
-    console.log('process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID', process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID);
     const [request, response, promptAsync] = useAuthRequest(
         {
             clientId: process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID!,

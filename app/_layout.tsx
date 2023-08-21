@@ -5,7 +5,6 @@ import { Appearance, useColorScheme } from 'react-native';
 import { TamaguiProvider, Theme } from 'tamagui';
 
 import config from '../tamagui.config';
-
 import setColorScheme = Appearance.setColorScheme;
 
 export {
@@ -15,7 +14,7 @@ export {
 
 export const unstable_settings = {
     // Ensure that reloading on `/modal` keeps a back button present.
-    initialRouteName: '(tabs)',
+    initialRouteName: 'login',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -25,7 +24,7 @@ export default function RootLayout() {
     const [loaded, error] = useFonts({
         Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
         InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
-        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+        SpaceMono: require('@/assets/fonts/SpaceMono-Regular.ttf'),
     });
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.

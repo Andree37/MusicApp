@@ -1,14 +1,18 @@
 import { StyleSheet } from 'react-native';
+import { Button, Text, useTheme, View } from 'tamagui';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from 'tamagui';
 
-export default function TabTwoScreen() {
+export default function TabOneScreen() {
+    const theme = useTheme();
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Tab Two</Text>
+            <Text color={theme.orange12} style={styles.title}>
+                Tab One
+            </Text>
             <View style={styles.separator} />
-            <EditScreenInfo path="app/(tabs)/two.tsx" />
+            <EditScreenInfo path="app/(tabs)/index.tsx" />
+            <Button onPress={async () => {}}>Login</Button>
         </View>
     );
 }
