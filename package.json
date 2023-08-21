@@ -2,13 +2,17 @@
   "name": "musicapp",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "engines": {
+    "yarn": ">= 1.21.0"
+  },
   "scripts": {
     "start-native": "TAMAGUI_TARGET=native expo start",
     "start-web": "TAMAGUI_TARGET=web expo start",
     "android": "TAMAGUI_TARGET=native expo start --android",
     "ios": "TAMAGUI_TARGET=native expo start --ios",
     "web": "TAMAGUI_TARGET=web expo start --web",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "jest": {
     "preset": "jest-expo"
@@ -46,8 +50,11 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.14",
+    "eslint": "^8.47.0",
+    "eslint-config-universe": "^12.0.0",
     "jest": "^29.2.1",
     "jest-expo": "~49.0.0",
+    "prettier": "^3.0.2",
     "react-test-renderer": "18.2.0",
     "typescript": "^5.1.3"
   },

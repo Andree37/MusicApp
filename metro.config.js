@@ -1,10 +1,10 @@
 // Learn more https://docs.expo.io/guides/customizing-metro
-const { getDefaultConfig } = require('expo/metro-config');
+const {getDefaultConfig} = require('expo/metro-config');
 
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname, {
-  // [Web-only]: Enables CSS support in Metro.
-  isCSSEnabled: true,
+    // [Web-only]: Enables CSS support in Metro.
+    isCSSEnabled: true,
 });
 
 // Expo 49 issue: default metro config needs to include "mjs"

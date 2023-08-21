@@ -1,25 +1,27 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Button } from 'tamagui';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
-import {Text, View} from '../../components/Themed';
-import useSpotifyAuth from "../../hooks/spotifyAuth";
-import {Button} from "tamagui";
+import { Text, View } from '../../components/Themed';
+import useSpotifyAuth from '../../hooks/spotifyAuth';
 
 export default function TabOneScreen() {
-    const {request, response, promptAsync} = useSpotifyAuth();
+    const { response, promptAsync } = useSpotifyAuth();
 
-    console.log(response)
+    console.log(response);
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Tab One</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
-            <EditScreenInfo path="app/(tabs)/index.tsx"/>
+            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+            <EditScreenInfo path="app/(tabs)/index.tsx" />
             <Button
                 onPress={async () => {
                     await promptAsync();
                 }}
-            >Login</Button>
+            >
+                Login
+            </Button>
         </View>
     );
 }
