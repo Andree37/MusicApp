@@ -1,38 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Image, Spinner, Text, View } from 'tamagui';
 import { StyleSheet } from 'react-native';
 import useSpotifyAuth from '@/hooks/spotifyAuth';
 import { router } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
-
-async function saveTokenToSecureStore(token: string) {
-    await SecureStore.setItemAsync('spotifyAuthToken', token);
-}
-
-async function getTokenFromSecureStore() {
-    return SecureStore.getItemAsync('spotifyAuthToken');
-}
+import AuthContext from '@/providers/authContext';
 
 export default function LoginForm() {
+    const { authToken, setAuthToken } = useContext(AuthContext);
     const { promptAsync } = useSpotifyAuth();
     const [loading, setLoading] = useState(true);
-    const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
-        async function fetchToken() {
-            const storedToken = await getTokenFromSecureStore();
-            setToken(storedToken);
+        if (authToken) {
+            router.replace('/(tabs)/one');
+        } else {
             setLoading(false);
         }
-
-        fetchToken();
-    }, []);
-
-    useEffect(() => {
-        if (token) {
-            router.replace('/(tabs)/one');
-        }
-    }, [token]);
+    }, [authToken]);
 
     if (loading) {
         return <Spinner size="large" color="$orange10" />;
@@ -48,8 +32,7 @@ export default function LoginForm() {
                     onPress={async () => {
                         const r = await promptAsync();
                         if (r.type === 'success') {
-                            await saveTokenToSecureStore(r.params.access_token);
-                            setToken(r.params.access_token);
+                            setAuthToken(r.params.access_token);
                         }
                     }}
                 >

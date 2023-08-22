@@ -5,6 +5,7 @@ import EditScreenInfo from '@/components/EditScreenInfo';
 
 export default function TabOneScreen() {
     const theme = useTheme();
+
     return (
         <View style={styles.container}>
             <Text color={theme.orange12} style={styles.title}>

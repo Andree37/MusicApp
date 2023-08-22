@@ -5,6 +5,7 @@ import { Appearance, useColorScheme } from 'react-native';
 import { TamaguiProvider, Theme } from 'tamagui';
 
 import config from '../tamagui.config';
+import { AuthProvider } from '@/providers/authContext';
 import setColorScheme = Appearance.setColorScheme;
 
 export {
@@ -51,12 +52,14 @@ function RootLayoutNav() {
 
     return (
         <TamaguiProvider config={config}>
-            <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
-                <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                    <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-                </Stack>
-            </Theme>
+            <AuthProvider>
+                <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
+                    <Stack>
+                        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+                    </Stack>
+                </Theme>
+            </AuthProvider>
         </TamaguiProvider>
     );
 }
