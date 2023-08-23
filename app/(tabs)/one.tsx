@@ -1,52 +1,74 @@
 import { StyleSheet } from 'react-native';
-import { Button, Text, useTheme, View } from 'tamagui';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { useContext, useEffect } from 'react';
+import { Image, Text, View } from 'tamagui';
+import { useContext, useEffect, useState } from 'react';
 import AuthContext from '@/providers/authContext';
-import useSpotifyGenreRecommendations from '@/hooks/spotifyGenreRecommendations';
+import useSpotifyGenreRecommendations, { Recommendations } from '@/hooks/spotifyGenreRecommendations';
+import Swiper from 'react-native-swiper';
 
+const swiperColors = ['#4ea821', '#97CAE5', '#e8e423', '#a8214e', '#e5ca97', '#23e8e4'];
 export default function TabOneScreen() {
     const { authToken } = useContext(AuthContext);
-    const theme = useTheme();
+    const [recommendations, setRecommendations] = useState<Recommendations[]>([]);
 
     useEffect(() => {
         async function a() {
-            const recommendations = await useSpotifyGenreRecommendations(authToken);
-            console.log(recommendations[0]);
-            recommendations.forEach((r) => {
-                console.log(r?.song.external_urls.spotify + ' ' + r?.genre);
-            });
+            if (authToken?.type !== 'success') return;
+            const recommendations = await useSpotifyGenreRecommendations(authToken.authentication?.accessToken || '');
+            setRecommendations(recommendations);
         }
 
         a();
     }, []);
 
+    if (recommendations.length === 0) {
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
+
     return (
-        <View style={styles.container}>
-            <Text color={theme.orange12} style={styles.title}>
-                Tab One
-            </Text>
-            <View style={styles.separator} />
-            <EditScreenInfo path="app/(tabs)/index.tsx" />
-            <Button onPress={async () => {}}>Login</Button>
-        </View>
+        <Swiper style={styles.wrapper} showsButtons loop={false}>
+            {recommendations.map((recommendation, index) => {
+                return (
+                    <View key={index} style={styles.slide1} backgroundColor={swiperColors[index % swiperColors.length]}>
+                        {recommendation.song?.album && (
+                            <Image
+                                source={{ uri: recommendation.song?.album.images[0].url, width: 100, height: 100 }}
+                            />
+                        )}
+                        <Text style={styles.text}>{recommendation.genre}</Text>
+                        <Text style={styles.text}>{recommendation.song?.name}</Text>
+                    </View>
+                );
+            })}
+        </Swiper>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    wrapper: {},
+    slide1: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
     },
-    title: {
-        fontSize: 20,
+    slide2: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#97CAE5',
+    },
+    slide3: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#e8e423',
+    },
+    text: {
+        color: '#000',
+        fontSize: 30,
         fontWeight: 'bold',
-    },
-    separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
     },
 });

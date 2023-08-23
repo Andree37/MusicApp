@@ -32,7 +32,7 @@ export default function LoginForm() {
                     onPress={async () => {
                         const r = await promptAsync();
                         if (r.type === 'success') {
-                            setAuthToken(r.params.access_token);
+                            setAuthToken(r);
                         }
                     }}
                 >
