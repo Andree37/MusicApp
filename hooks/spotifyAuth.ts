@@ -16,7 +16,8 @@ export default function useSpotifyAuth() {
             clientId: process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID!,
             scopes: ['user-read-private', 'playlist-modify-public'], // Add more as needed
             redirectUri,
-            responseType: 'token',
+            responseType: 'code',
+            usePKCE: false,
         },
         discovery,
     );

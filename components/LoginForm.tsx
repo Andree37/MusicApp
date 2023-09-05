@@ -31,8 +31,18 @@ export default function LoginForm() {
                     style={styles.spotifyButton}
                     onPress={async () => {
                         const r = await promptAsync();
+
                         if (r.type === 'success') {
-                            setAuthToken(r);
+                            console.log(r);
+                            const response = await fetch('http://localhost:3000/api/spotify/exchange', {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    code: r.params.code,
+                                }),
+                            });
+                            if (response.ok) {
+                                setAuthToken(r);
+                            }
                         }
                     }}
                 >
