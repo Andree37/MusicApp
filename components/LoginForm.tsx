@@ -33,9 +33,11 @@ export default function LoginForm() {
                         const r = await promptAsync();
 
                         if (r.type === 'success') {
-                            console.log(r);
                             const response = await fetch('http://localhost:3000/api/spotify/exchange', {
                                 method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
                                 body: JSON.stringify({
                                     code: r.params.code,
                                 }),

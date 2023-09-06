@@ -3,6 +3,7 @@ import { Image, Text, View } from 'tamagui';
 import { useEffect, useState } from 'react';
 import Swiper from 'react-native-swiper';
 import { Song } from '@/types/songs';
+import useSpotifyGenerateDailySongs from '@/hooks/spotifyGenerateDailySongs';
 
 const swiperColors = ['#4ea821', '#97CAE5', '#e8e423', '#a8214e', '#e5ca97', '#23e8e4'];
 
@@ -18,6 +19,15 @@ const url = `${process.env.EXPO_PUBLIC_BACKEND_URL!}/songs?day=${formatDate(new 
 
 export default function TabTwoScreen() {
     const [songs, setSongs] = useState<Song[]>([]);
+
+    useEffect(() => {
+        // TODO: this should generate the songs for the day only if there arent any
+        const f = async () => {
+            const response = await useSpotifyGenerateDailySongs();
+            console.log('response: ', response);
+        };
+        f();
+    }, []);
 
     useEffect(() => {
         console.log(url);

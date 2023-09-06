@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Image, Text, View } from 'tamagui';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import AuthContext from '@/providers/authContext';
-import useSpotifyGenreRecommendations, { Recommendations } from '@/hooks/spotifyGenreRecommendations';
+import { Recommendations } from '@/hooks/spotifyGenreRecommendations';
 import Swiper from 'react-native-swiper';
 
 const swiperColors = ['#4ea821', '#97CAE5', '#e8e423', '#a8214e', '#e5ca97', '#23e8e4'];
@@ -10,15 +10,15 @@ export default function TabOneScreen() {
     const { authToken } = useContext(AuthContext);
     const [recommendations, setRecommendations] = useState<Recommendations[]>([]);
 
-    useEffect(() => {
-        async function a() {
-            if (authToken?.type !== 'success') return;
-            const recommendations = await useSpotifyGenreRecommendations(authToken.authentication?.accessToken || '');
-            setRecommendations(recommendations);
-        }
-
-        a();
-    }, []);
+    // useEffect(() => {
+    //     async function a() {
+    //         if (authToken?.type !== 'success') return;
+    //         const recommendations = await useSpotifyGenreRecommendations(authToken.authentication?.accessToken || '');
+    //         setRecommendations(recommendations);
+    //     }
+    //
+    //     a();
+    // }, []);
 
     if (recommendations.length === 0) {
         return (
