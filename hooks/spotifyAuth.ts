@@ -11,6 +11,7 @@ const discovery = {
 
 export default function useSpotifyAuth() {
     const redirectUri = makeRedirectUri();
+    console.log('redirecting spotify to: ' + redirectUri);
     const [request, response, promptAsync] = useAuthRequest(
         {
             clientId: process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID!,
