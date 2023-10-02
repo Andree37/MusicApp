@@ -21,20 +21,33 @@ export default function TabTwoScreen() {
     const [songs, setSongs] = useState<Song[]>([]);
 
     useEffect(() => {
-        // TODO: this should generate the songs for the day only if there arent any
+        console.log(url);
+
+        async function fetchDailySongs() {
+            try {
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    console.error('response not ok');
+                }
+
+                return await response.json();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
         const f = async () => {
-            const response = await useSpotifyGenerateDailySongs();
-            console.log('response: ', response);
+            const data = await fetchDailySongs();
+            if (data) {
+                setSongs(data);
+            } else {
+                await useSpotifyGenerateDailySongs();
+                const newSongs = await fetchDailySongs();
+                setSongs(newSongs);
+            }
         };
         f();
-    }, []);
-
-    useEffect(() => {
-        console.log(url);
-        fetch(url)
-            .then((response) => response.json())
-            .then((data) => setSongs(data))
-            .catch((error) => console.error(error));
     }, []);
 
     if (songs.length === 0) {
