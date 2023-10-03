@@ -22,29 +22,20 @@ export default function TabTwoScreen() {
 
     useEffect(() => {
         console.log(url);
-
-        async function fetchDailySongs() {
+        const f = async () => {
             try {
                 const response = await fetch(url);
 
                 if (!response.ok) {
                     console.error('response not ok');
                 }
-
-                return await response.json();
+                const newSongs = await response.json();
+                if (newSongs.length === 0) {
+                    await useSpotifyGenerateDailySongs();
+                }
+                setSongs(newSongs);
             } catch (e) {
                 console.error(e);
-            }
-        }
-
-        const f = async () => {
-            const data = await fetchDailySongs();
-            if (data) {
-                setSongs(data);
-            } else {
-                await useSpotifyGenerateDailySongs();
-                const newSongs = await fetchDailySongs();
-                setSongs(newSongs);
             }
         };
         f();
